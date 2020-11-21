@@ -1,7 +1,7 @@
 import mongoose, { ConnectionOptions } from 'mongoose';
 import config from './config';
 
-const mongooseOptions: ConnectionOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+const mongooseOptions: ConnectionOptions = { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true };
 
 //run the database connection at runtime
 (async () => {

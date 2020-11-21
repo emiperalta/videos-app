@@ -111,3 +111,6 @@ dist/**/*
 
 # Custom config file
 **/config.ts
+
+# REST Client file
+endpoints.rest
