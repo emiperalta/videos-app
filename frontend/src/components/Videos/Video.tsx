@@ -1,5 +1,5 @@
 import React from 'react';
-import { IVideo, Props } from '../Services/IVideo';
+import { Props } from '../Services/IVideo';
 
 const Video = (props: Props) => {
     return (
