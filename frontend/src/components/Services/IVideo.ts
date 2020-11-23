@@ -13,4 +13,8 @@ export interface Props {
     video: IVideo;
 }
 
+export interface Params {
+    id: string;
+}
+
 export type InputChange = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;

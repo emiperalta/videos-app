@@ -1,8 +1,8 @@
-import React, { FormEvent, useState } from 'react';
-import { IVideo, InputChange } from '../Services/IVideo';
+import React, { FormEvent, useState, useEffect } from 'react';
+import { IVideo, InputChange, Params } from '../Services/IVideo';
 import * as Api from '../Services/Api';
 import { toast } from 'react-toastify';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 const initialState = {
     title: '',
@@ -13,8 +13,20 @@ const initialState = {
 const VideoForm = () => {
     const [video, setVideo] = useState<IVideo>(initialState);
     const history = useHistory();
+    const params = useParams<Params>();
 
-    const inputsHandler = (e: InputChange) => {
+    const getVideoById = async (id: string) => {
+        const res = await Api.getVideoById(id);
+        const { title, description, url } = res.data;
+
+        setVideo({ title, description, url });
+    };
+
+    useEffect(() => {
+        if (params.id) getVideoById(params.id);
+    }, [params.id]);
+
+    const inputHandler = (e: InputChange) => {
         const { name, value } = e.target;
         const fieldValues = { [name]: value };
 
@@ -27,9 +39,15 @@ const VideoForm = () => {
     const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        await Api.createVideo(video);
-        toast.success('Video added successfully!');
-        history.push('/');
+        if (params.id) {
+            await Api.updateVideo(params.id, video);
+            toast.info('Video updated successfully!');
+            history.push('/');
+        } else {
+            await Api.createVideo(video);
+            toast.success('Video added successfully!');
+            history.push('/');
+        }
     };
 
     return (
@@ -37,7 +55,11 @@ const VideoForm = () => {
             <div className='col-md-4 offset-md-4'>
                 <div className='card'>
                     <div className='card-body'>
-                        <h3>New video</h3>
+                        {params.id ? (
+                            <h3 className='pb-2'>Update video</h3>
+                        ) : (
+                            <h3 className='pb-2'>New video</h3>
+                        )}
                         <form onSubmit={submitHandler}>
                             <div className='form-group'>
                                 <input
@@ -45,7 +67,8 @@ const VideoForm = () => {
                                     name='title'
                                     placeholder='Video title'
                                     className='form-control'
-                                    onChange={inputsHandler}
+                                    onChange={inputHandler}
+                                    value={video.title}
                                 />
                             </div>
                             <div className='form-group'>
@@ -54,7 +77,8 @@ const VideoForm = () => {
                                     name='url'
                                     placeholder='https://youtube.com/...'
                                     className='form-control'
-                                    onChange={inputsHandler}
+                                    onChange={inputHandler}
+                                    value={video.url}
                                 />
                             </div>
                             <div className='form-group'>
@@ -63,12 +87,23 @@ const VideoForm = () => {
                                     rows={3}
                                     className='form-control'
                                     style={{ resize: 'none' }}
-                                    onChange={inputsHandler}
+                                    onChange={inputHandler}
+                                    value={video.description}
                                 ></textarea>
                             </div>
-                            <button type='submit' className='btn btn-primary'>
-                                Add video
-                            </button>
+
+                            {params.id ? (
+                                <button type='submit' className='btn btn-info'>
+                                    Update
+                                </button>
+                            ) : (
+                                <button
+                                    type='submit'
+                                    className='btn btn-primary'
+                                >
+                                    Create
+                                </button>
+                            )}
                         </form>
                     </div>
                 </div>

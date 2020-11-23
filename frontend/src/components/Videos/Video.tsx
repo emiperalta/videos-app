@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
 import { Props } from '../Services/IVideo';
+import * as Api from '../Services/Api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusSquare } from '@fortawesome/free-solid-svg-icons';
+import { useHistory } from 'react-router-dom';
 
 const Video = (props: Props) => {
-    const deleteHandler = () => {
-        //delete video from the list
+    const history = useHistory();
+
+    const deleteHandler = async (id: string) => {
+        await Api.deleteVideo(id);
     };
 
     return (
         <div className='col-md-4 p-2'>
-            <div className='card'>
+            <div className='card' style={{ cursor: 'pointer' }}>
                 <div className='embed-responsive embed-responsive-21by9'>
                     <ReactPlayer
                         url={props.video.url}
@@ -19,12 +23,15 @@ const Video = (props: Props) => {
                         height='100px'
                     />
                 </div>
-                <div className='card-body'>
+                <div
+                    className='card-body'
+                    onClick={() => history.push(`/update/${props.video._id}`)}
+                >
                     <div className='d-flex justify-content-between'>
                         <h5 className='card-title'>{props.video.title}</h5>
                         <FontAwesomeIcon
                             icon={faMinusSquare}
-                            onClick={deleteHandler}
+                            onClick={() => deleteHandler(props.video._id!)}
                         />
                     </div>
                     <p className='card-text'>{props.video.description}</p>

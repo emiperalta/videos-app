@@ -16,6 +16,7 @@ function App() {
                     <Switch>
                         <Route exact path='/' component={VideoList} />
                         <Route path='/addvideo' component={VideoForm} />
+                        <Route path='/update/:id' component={VideoForm} />
                     </Switch>
                     <ToastContainer />
                 </div>

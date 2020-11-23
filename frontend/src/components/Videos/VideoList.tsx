@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Video from './Video';
 import { IVideo } from '../Services/IVideo';
 import * as Api from '../Services/Api';
+import { useHistory } from 'react-router-dom';
 
 const VideoList = () => {
     useEffect(() => {
