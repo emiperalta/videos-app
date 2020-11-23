@@ -2,13 +2,17 @@ import React, { FormEvent, useState } from 'react';
 import { IVideo, InputChange } from '../Services/IVideo';
 import * as Api from '../Services/Api';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
+
+const initialState = {
+    title: '',
+    description: '',
+    url: '',
+};
 
 const VideoForm = () => {
-    const [video, setVideo] = useState<IVideo>({
-        title: '',
-        description: '',
-        url: '',
-    });
+    const [video, setVideo] = useState<IVideo>(initialState);
+    const history = useHistory();
 
     const inputsHandler = (e: InputChange) => {
         const { name, value } = e.target;
@@ -25,6 +29,7 @@ const VideoForm = () => {
 
         await Api.createVideo(video);
         toast.success('Video added successfully!');
+        history.push('/');
     };
 
     return (
@@ -33,7 +38,6 @@ const VideoForm = () => {
                 <div className='card'>
                     <div className='card-body'>
                         <h3>New video</h3>
-
                         <form onSubmit={submitHandler}>
                             <div className='form-group'>
                                 <input

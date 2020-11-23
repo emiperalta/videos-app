@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVideo } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
     return (
         <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
-            <Link className='navbar-brand' to='/'>
-                Video-App
+            <Link className='navbar-brand d-flex align-items-center' to='/'>
+                Video-App <FontAwesomeIcon icon={faVideo} className='ml-1' />
             </Link>
 
             <button
