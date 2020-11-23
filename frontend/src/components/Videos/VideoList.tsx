@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Video from './Video';
 import { IVideo } from '../Services/IVideo';
 import * as Api from '../Services/Api';
-import { useHistory } from 'react-router-dom';
 
 const VideoList = () => {
     useEffect(() => {
@@ -19,7 +18,13 @@ const VideoList = () => {
     return (
         <div className='row'>
             {videos.map(video => {
-                return <Video key={video._id} video={video} />;
+                return (
+                    <Video
+                        key={video._id}
+                        video={video}
+                        getVideos={getVideos}
+                    />
+                );
             })}
         </div>
     );

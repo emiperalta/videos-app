@@ -42,12 +42,12 @@ const VideoForm = () => {
         if (params.id) {
             await Api.updateVideo(params.id, video);
             toast.info('Video updated successfully!');
-            history.push('/');
         } else {
             await Api.createVideo(video);
             toast.success('Video added successfully!');
-            history.push('/');
         }
+
+        history.push('/');
     };
 
     return (

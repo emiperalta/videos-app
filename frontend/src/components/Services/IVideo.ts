@@ -11,6 +11,7 @@ export interface IVideo {
 
 export interface Props {
     video: IVideo;
+    getVideos: () => void;
 }
 
 export interface Params {

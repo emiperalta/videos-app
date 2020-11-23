@@ -12,13 +12,13 @@ export const getVideoById = async (id: string) => {
 };
 
 export const createVideo = async (video: IVideo) => {
-    return await axios.post(baseURL, video);
+    return await axios.post<IVideo>(baseURL, video);
 };
 
 export const updateVideo = async (id: string, videoUpdate: IVideo) => {
-    return await axios.put(baseURL + '/' + id, videoUpdate);
+    return await axios.put<IVideo>(baseURL + '/' + id, videoUpdate);
 };
 
 export const deleteVideo = async (id: string) => {
-    return await axios.delete(baseURL + '/' + id);
+    return await axios.delete<IVideo>(baseURL + '/' + id);
 };
