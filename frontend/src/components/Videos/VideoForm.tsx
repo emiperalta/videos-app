@@ -17,18 +17,18 @@ const VideoForm = () => {
 
     const getVideoById = async (id: string) => {
         const res = await Api.getVideoById(id);
-        const { title, description, url } = res.data;
+        const { title, description, url } = res.data; //deconstrunction
 
         setVideo({ title, description, url });
     };
 
     useEffect(() => {
         if (params.id) getVideoById(params.id);
-    }, [params.id]);
+    }, [params.id]); //if params.id change execute getVideoById()
 
     const inputHandler = (e: InputChange) => {
-        const { name, value } = e.target;
-        const fieldValues = { [name]: value };
+        const { name, value } = e.target; //deconstruction
+        const fieldValues = { [name]: value }; //get name of e.target (title for example) and set the value from input
 
         setVideo({
             ...video,
@@ -47,7 +47,7 @@ const VideoForm = () => {
             toast.success('Video added successfully!');
         }
 
-        history.push('/');
+        history.push('/'); //redirect to homepage
     };
 
     return (

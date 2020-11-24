@@ -14,7 +14,7 @@ const Video = (props: Props) => {
     const deleteHandler = async (id: string) => {
         await Api.deleteVideo(id);
         toast.warning('Video deleted');
-        props.getVideos();
+        props.getVideos(); //to reload VideoList when a video is deleted
     };
 
     return (

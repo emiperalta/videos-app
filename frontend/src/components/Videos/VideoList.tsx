@@ -6,7 +6,7 @@ import * as Api from '../Services/Api';
 const VideoList = () => {
     useEffect(() => {
         getVideos();
-    }, []);
+    }, []); //execute getVideos() at startup
 
     const [videos, setVideos] = useState<IVideo[]>([]);
 
